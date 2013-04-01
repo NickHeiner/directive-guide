@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('directiveGuideApp', [])
+    angular.module('directiveGuideApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
