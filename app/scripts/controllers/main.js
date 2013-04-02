@@ -2,6 +2,8 @@
 
 angular.module('directiveGuideApp')
     .controller('MainCtrl', function($scope) {
+
+
         $scope.sampleDirective = {
             name: 'hell-yeah-son',
             priority: 0,
@@ -29,4 +31,9 @@ angular.module('directiveGuideApp')
         $scope.activate = function(key) {
             $scope.active = key;
         }
+    })
+    .filter('format', function(jsonFilter) {
+        return function(val) {
+            return typeof val === typeof function() {} ? val.toString() : jsonFilter(val);
+        };
     });
