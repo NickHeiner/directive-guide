@@ -2,12 +2,6 @@
 
 angular.module('directiveGuideApp')
     .controller('MainCtrl', function($scope) {
-        $scope.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
-
         $scope.sampleDirective = {
             priority: 0,
             template: '<div></div>',
@@ -27,4 +21,8 @@ angular.module('directiveGuideApp')
             link: function postLink(scope, iElement, iAttrs) {
             }
         };
+
+        $scope.activate = function(key) {
+            $scope.active = key;
+        }
     });

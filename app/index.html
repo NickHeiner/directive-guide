@@ -34,47 +34,214 @@
 </head>
 <body ng-app="directiveGuideApp" ng-controller="MainCtrl">
 
-<div class="navbar navbar-inverse navbar-static-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="#">angular directives cheatsheet</a>
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">angular directives cheatsheet</a>
 
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                    <li><a class="brand" href="http://docs.angularjs.org/guide/directive">also see: angularjs.org</a>
-                    </li>
-                    <ul>
+                <div class="nav-collapse">
+                    <ul class="nav pull-right">
+                        <li><a class="brand" href="http://docs.angularjs.org/guide/directive">also see: angularjs.org</a>
+                        </li>
+                        <ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="row-fluid">
-        <div class="span12">
-            <h1>angular directives
-                <small> An interactive guide</small>
-            </h1>
+        <div class="row-fluid">
+            <div class="span12">
+                <h1>angular directives
+                    <small> An interactive guide</small>
+                </h1>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span6">
+              <pre class="npm">
+    {
+        <span class="pair" ng-repeat="(key, val) in sampleDirective" ng-click="activate(key)"><span class="key">{{key}}</span>: <span class="value">{{val}},</span>
+        </span>
+    }
+    </pre>
+
+            </div>
+            <div class="span6">
+                <div class="hint">
+
+                    <span ng-show="active == 'name'">
+                        <code>name</code> - Name of the current scope. Optional and defaults to the name at registration.
+                    </span>
+                    <span ng-show="active == 'priority'"><code>priority</code> - When there are multiple directives defined on a single DOM element, sometimes it
+                            is necessary to specify the order in which the directives are applied. The <code>priority</code> is used
+                            to sort the directives before their <code>compile</code> functions get called. Higher <code>priority</code> goes
+                            first. The order of directives within the same priority is undefined.
+                    </span>
+                    <span ng-show="active == 'terminal'"><p><code>terminal</code> - If set to true then the current <code>priority</code> will be the last set of directives
+                            which will execute (any directives at the current priority will still execute
+                            as the order of execution on same <code>priority</code> is undefined).
+                    </span>
+                    <span ng-show="active == 'scope'"><code>scope</code> - If set to:
+
+                            <ul><li><p><code>true</code> - then a new scope will be created for this directive. If multiple directives on the
+                                same element request a new scope, only one new scope is created. The new scope rule does not
+                                apply for the root of the template since the root of the template always gets a new scope.</p></li>
+                                <li><p><code>{}</code> (object hash) - then a new 'isolate' scope is created. The 'isolate' scope differs from
+                                    normal scope in that it does not prototypically inherit from the parent scope. This is useful
+                                    when creating reusable components, which should not accidentally read or modify data in the
+                                    parent scope. <br>
+                                    The 'isolate' scope takes an object hash which defines a set of local scope properties
+                                    derived from the parent scope. These local properties are useful for aliasing values for
+                                    templates. Locals definition is a hash of local scope property to its source:</p>
+
+                                    <ul><li><p><code>@</code> or <code>@attr</code> - bind a local scope property to the value of DOM attribute. The result is
+                                        always a string since DOM attributes are strings. If no <code>attr</code> name is specified  then the
+                                        attribute name is assumed to be the same as the local name.
+                                        Given <code>&lt;widget my-attr="hello {{name}}"&gt;</code> and widget definition
+                                        of <code>scope: { localName:'@myAttr' }</code>, then widget scope property <code>localName</code> will reflect
+                                        the interpolated value of <code>hello {{name}}</code>. As the <code>name</code> attribute changes so will the
+                                        <code>localName</code> property on the widget scope. The <code>name</code> is read from the parent scope (not
+                                        component scope).</p></li>
+                                        <li><p><code>=</code> or <code>=attr</code> - set up bi-directional binding between a local scope property and the
+                                            parent scope property of name defined via the value of the <code>attr</code> attribute. If no <code>attr</code>
+                                            name is specified then the attribute name is assumed to be the same as the local name.
+                                            Given <code>&lt;widget my-attr="parentModel"&gt;</code> and widget definition of
+                                            <code>scope: { localModel:'=myAttr' }</code>, then widget scope property <code>localModel</code> will reflect the
+                                            value of <code>parentModel</code> on the parent scope. Any changes to <code>parentModel</code> will be reflected
+                                            in <code>localModel</code> and any changes in <code>localModel</code> will reflect in <code>parentModel</code>.</p></li>
+                                        <li><p><code>&amp;</code> or <code>&amp;attr</code> - provides a way to execute an expression in the context of the parent scope.
+                                            If no <code>attr</code> name is specified then the attribute name is assumed to be the same as the
+                                            local name. Given <code>&lt;widget my-attr="count = count + value"&gt;</code> and widget definition of
+                                            <code>scope: { localFn:'&amp;myAttr' }</code>, then isolate scope property <code>localFn</code> will point to
+                                            a function wrapper for the <code>count = count + value</code> expression. Often it's desirable to
+                                            pass data from the isolated scope via an expression and to the parent scope, this can be
+                                            done by passing a map of local variable names and values into the expression wrapper fn.
+                                            For example, if the expression is <code>increment(amount)</code> then we can specify the amount value
+                                            by calling the <code>localFn</code> as <code>localFn({amount: 22})</code>.</p></li></ul></li></ul>
+                        </span>
+                        <span ng-show="active == 'controller'"><code>controller</code> - Controller constructor function. The controller is instantiated before the
+                            pre-linking phase and it is shared with other directives if they request it by name (see
+                            <code>require</code> attribute). This allows the directives to communicate with each other and augment
+                            each other's behavior. The controller is injectable with the following locals:</p>
+
+                            <ul><li><code>$scope</code> - Current scope associated with the element</li>
+                                <li><code>$element</code> - Current element</li>
+                                <li><code>$attrs</code> - Current attributes object for the element</li>
+                                <li><code>$transclude</code> - A transclude linking function pre-bound to the correct transclusion scope:
+                                    <code>function(cloneLinkingFn)</code>.</li></ul>
+                        </span>
+                        <span ng-show="active == 'require'"><code>require</code> - Require another controller be passed into current directive linking function. The
+                            <code>require</code> takes a name of the directive controller to pass in. If no such controller can be
+                            found an error is raised. The name can be prefixed with:
+
+                            <ul><li><code>?</code> - Don't raise an error. This makes the require dependency optional.</li>
+                                <li><code>^</code> - Look for the controller on parent elements as well.</li></ul>
+                        </span>
+                        <span ng-show="active == 'restrict'"><p><code>restrict</code> - String of subset of <code>EACM</code> which restricts the directive to a specific directive
+                            declaration style. If omitted directives are allowed on attributes only.</p>
+
+                            <ul><li><code>E</code> - Element name: <code>&lt;my-directive&gt;&lt;/my-directive&gt;</code></li>
+                                <li><code>A</code> - Attribute: <code>&lt;div my-directive="exp"&gt;
+                                    &lt;/div&gt;</code></li>
+                                <li><code>C</code> - Class: <code>&lt;div class="my-directive: exp;"&gt;&lt;/div&gt;</code></li>
+                                <li><code>M</code> - Comment: <code>&lt;!-- directive: my-directive exp --&gt;</code></li></ul>
+                        </span>
+                        <span ng-show="active == 'template'"><code>template</code> - replace the current element with the contents of the HTML. The replacement process
+                            migrates all of the attributes / classes from the old element to the new one. See the
+                            <a href="guide/directive#Components">Creating Components</a> section below for more information.</span>
+                        <span ng-show="active == 'templateUrl'"></span><code>templateUrl</code> - Same as <code>template</code> but the template is loaded from the specified URL. Because
+                            the template loading is asynchronous the compilation/linking is suspended until the template
+                            is loaded.</span>
+                        <span ng-show="active == 'replace'"><code>replace</code> - if set to <code>true</code> then the template will replace the current element, rather than
+                            append the template to the element.</span>
+
+                    <span ng-show="active == 'transclude'">
+                        <p><code>transclude</code> - compile the content of the element and make it available to the directive.
+                            Typically used with <a href="api/ng.directive:ngTransclude"><code>ngTransclude</code></a>. The advantage of transclusion is that the linking function receives a
+                            transclusion function which is pre-bound to the correct scope. In a typical setup the widget
+                            creates an <code>isolate</code> scope, but the transclusion is not a child, but a sibling of the <code>isolate</code>
+                            scope. This makes it possible for the widget to have private state, and the transclusion to
+                            be bound to the parent (pre-<code>isolate</code>) scope.</p>
+
+                            <ul><li><code>true</code> - transclude the content of the directive.</li>
+                                <li><code>'element'</code> - transclude the whole element including any directives defined at lower priority.</li></ul>
+                    </span>
+
+                    <span ng-show="active == 'compile'">
+                        <h3>Compile function</h3>
+
+                        <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="kwd">function</span><span class="pln"> compile</span><span class="pun">(</span><span class="pln">tElement</span><span class="pun">,</span><span class="pln"> tAttrs</span><span class="pun">,</span><span class="pln"> transclude</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span></li></ol></pre>
+
+                        <p>The compile function deals with transforming the template DOM. Since most directives do not do
+                            template transformation, it is not used often. Examples that require compile functions are
+                            directives that transform template DOM, such as <a href="api/ng.directive:ngRepeat"><code>ngRepeat</code></a>, or load the contents
+                            asynchronously, such as <a href="api/ng.directive:ngView"><code>ngView</code></a>. The
+                            compile function takes the following arguments.</p>
+
+                        <ul>
+                            <li><p><code>tElement</code> - template element - The element where the directive has been declared. It is
+                                safe to do template transformation on the element and child elements only.</p></li>
+                            <li><p><code>tAttrs</code> - template attributes - Normalized list of attributes declared on this element shared
+                                between all directive compile functions. See <a href="guide/directive#Attributes">Attributes</a>.</p></li>
+                            <li><p><code>transclude</code> - A transclude linking function: <code>function(scope, cloneLinkingFn)</code>.</p></li>
+                        </ul>
+
+                        <p>NOTE: The template instance and the link instance may not be the same objects if the template has
+                            been cloned. For this reason it is not safe in the compile function to do anything other than DOM
+                            transformation that applies to all DOM clones. Specifically, DOM listener registration should be
+                            done in a linking function rather than in a compile function.</p>
+
+                        <p>A compile function can have a return value which can be either a function or an object.</p>
+
+                        <ul>
+                            <li><p>returning a function - is equivalent to registering the linking function via the <code>link</code> property
+                                of the config object when the compile function is empty.</p></li>
+                            <li><p>returning an object with function(s) registered via <code>pre</code> and <code>post</code> properties - allows you to
+                                control when a linking function should be called during the linking phase. See info about
+                                pre-linking and post-linking functions below.</p></li>
+                        </ul>
+                    </span>
+
+                    <span ng-show="active == 'link'">
+                        <h3>Linking function</h3>
+
+                        <pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="kwd">function</span><span class="pln"> link</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> iElement</span><span class="pun">,</span><span class="pln"> iAttrs</span><span class="pun">,</span><span class="pln"> controller</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span></li></ol></pre>
+
+                        <p>The link function is responsible for registering DOM listeners as well as updating the DOM. It is
+                            executed after the template has been cloned. This is where most of the directive logic will be
+                            put.</p>
+
+                        <ul>
+                            <li><p><code>scope</code> - <a href="api/ng.$rootScope.Scope"><code>Scope</code></a> - The scope to be used by the
+                                directive for registering <a href="api/ng.$rootScope.Scope#$watch"><code>watches</code></a>.</p></li>
+                            <li><p><code>iElement</code> - instance element - The element where the directive is to be used. It is safe to
+                                manipulate the children of the element only in <code>postLink</code> function since the children have
+                                already been linked.</p></li>
+                            <li><p><code>iAttrs</code> - instance attributes - Normalized list of attributes declared on this element shared
+                                between all directive linking functions. See <a href="guide/directive#Attributes">Attributes</a>.</p></li>
+                            <li><p><code>controller</code> - a controller instance - A controller instance if at least one directive on the
+                                element defines a controller. The controller is shared among all the directives, which allows
+                                the directives to use the controllers as a communication channel.</p></li>
+                        </ul>
+
+                        <h4>Pre-linking function</h4>
+
+                        <p>Executed before the child elements are linked. Not safe to do DOM transformation since the
+                            compiler linking function will fail to locate the correct elements for linking.</p>
+
+                        <h4>Post-linking function</h4>
+
+                        <p>Executed after the child elements are linked. It is safe to do DOM transformation in the post-linking function.</p>
+                    </span>
+
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <div class="row-fluid">
-        <div class="span6">
-          <pre class="npm">
-{
-    <span class="pair" ng-repeat="(key, val) in sampleDirective"><span class="key">{{key}}</span>: <span class="value">{{val}},</span>
-    </span>
-}
-</pre>
-
-        </div>
-        <div class="span6">
-            <div class="hint">loading...</div>
-        </div>
-
-    </div>
-</div>
 
 </body>
 </html>
