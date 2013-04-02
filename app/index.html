@@ -63,48 +63,10 @@
         <div class="span6">
           <pre class="npm">
 {
-    <span class="pair"><span class="key">priority</span>: <span class="value">0</span></span>,
-    <span class="pair"><span class="key">template</span>: <span class="value">'&lt;div&gt;&lt;/div&gt;',</span></span>
-    <span class="pair"><span class="key">templateUrl</span>: <span class="value">'directive.html',</span></span>
-    <span class="pair"><span class="key">replace</span>: <span class="value">false,</span></span>
-    <span class="pair"><span class="key">transclude</span>: <span class="value">false,</span></span>
-    <span class="pair"><span class="key">restrict</span>: <span class="value">'A',</span></span>
-    <span class="pair"><span class="key">scope</span>: <span class="value">false,</span></span>
-    <span class="pair"><span class="key">compile</span>: <span class="value">function compile(tElement, tAttrs, transclude) {
-        return {
-            <span class="pair"><span class="key">pre</span>: <span class="value">function preLink(scope, iElement, iAttrs, controller) {
-            },</span></span>
-           <span class="pair"><span class="key">post</span>: <span class="value">function postLink(scope, iElement, iAttrs, controller) {
-            }
-        }
-    },</span></span>
-    <span class="pair"><span class="key">link</span>: <span class="value">function postLink(scope, iElement, iAttrs) { }</span></span>
+    <span class="pair" ng-repeat="(key, val) in sampleDirective"><span class="key">{{key}}</span>: <span class="value">{{val}},</span>
+    </span>
 }
-
-              <!--{-->
-                <!--<span class="pair"><span class="key">"version"</span>: "0.3.0",</span>-->
-                <!--<span class="pair" ng-repeat="(key, val) in sampleDirective">-->
-                    <!--<span class="key">{{key}}</span>: -->
-                    <!--<span class="value">{{value}}</span>-->
-                <!--</span>-->
-              <!--}-->
-
-              <!--<span class="pair" ng-repeat="(key, value) in sampleDirective">-->
-                  <!--<span class="key">"{{key}}"</span>:-->
-                  <!--<span class="value">{{value}}</span>-->
-              <!--</span>-->
-
-
-            <!--<span class="pair"><span class="key">"contributors"</span>: [-->
-  <!--<span class="value">  {-->
-      <!--"name": "Marak Squires",-->
-      <!--"email": "marak@nodejitsu.com"-->
-    <!--}</span></span> -->
-  <!--],-->
-  <!--<span class="pair"><span class="key">"bin"</span></span>: {-->
-    <!--<span class="pair"><span class="key">"httpserver"</span>: <span class="value">"./bin/httpserver"</span></span>-->
-  <!--},-->
-          </pre>
+</pre>
 
         </div>
         <div class="span6">
