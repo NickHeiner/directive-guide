@@ -3,10 +3,12 @@
 angular.module('directiveGuideApp')
     .controller('MainCtrl', function($scope) {
         $scope.sampleDirective = {
+            name: 'hell-yeah-son',
             priority: 0,
             template: '<div></div>',
             templateUrl: 'directive.html',
             replace: false,
+            require: '^ngModel',
             transclude: false,
             restrict: 'A',
             scope: false,
@@ -20,6 +22,7 @@ angular.module('directiveGuideApp')
             },
             link: function postLink(scope, iElement, iAttrs) {
             },
+            controller: function() { },
             terminal: false
         };
 
