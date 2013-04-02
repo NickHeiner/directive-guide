@@ -63,7 +63,7 @@
             <div class="span6">
               <pre class="npm">
     {
-        <span class="pair" ng-repeat="(key, val) in sampleDirective" ng-click="activate(key)"><span class="key">{{key}}</span>: <span class="value">{{val}},</span>
+        <span class="pair" ng-repeat="(key, val) in sampleDirective" ng-click="activate(key)"><span class="key">{{key}}</span>: <span class="value">{{val | json}},</span>
         </span>
     }
     </pre>
@@ -80,11 +80,7 @@
                             to sort the directives before their <code>compile</code> functions get called. Higher <code>priority</code> goes
                             first. The order of directives within the same priority is undefined.
                     </span>
-                    <span ng-show="active == 'terminal'"><p><code>terminal</code> - If set to true then the current <code>priority</code> will be the last set of directives
-                            which will execute (any directives at the current priority will still execute
-                            as the order of execution on same <code>priority</code> is undefined).
-                    </span>
-                    <span ng-show="active == 'scope'"><code>scope</code> - If set to:
+                    <span ng-show="active == 'scope'">asdfasd<p><code>scope</code> - If set to:</p>
 
                             <ul><li><p><code>true</code> - then a new scope will be created for this directive. If multiple directives on the
                                 same element request a new scope, only one new scope is created. The new scope rule does not
@@ -152,9 +148,10 @@
                         <span ng-show="active == 'template'"><code>template</code> - replace the current element with the contents of the HTML. The replacement process
                             migrates all of the attributes / classes from the old element to the new one. See the
                             <a href="guide/directive#Components">Creating Components</a> section below for more information.</span>
-                        <span ng-show="active == 'templateUrl'"></span><code>templateUrl</code> - Same as <code>template</code> but the template is loaded from the specified URL. Because
+                        <span ng-show="active == 'templateUrl'"><code>templateUrl</code> - Same as <code>template</code> but the template is loaded from the specified URL. Because
                             the template loading is asynchronous the compilation/linking is suspended until the template
-                            is loaded.</span>
+                            is loaded.
+                        </span>
                         <span ng-show="active == 'replace'"><code>replace</code> - if set to <code>true</code> then the template will replace the current element, rather than
                             append the template to the element.</span>
 
@@ -235,6 +232,10 @@
                         <h4>Post-linking function</h4>
 
                         <p>Executed after the child elements are linked. It is safe to do DOM transformation in the post-linking function.</p>
+                    </span>
+                    <span ng-show="active == 'terminal'"><p><code>terminal</code> - If set to true then the current <code>priority</code> will be the last set of directives
+                    which will execute (any directives at the current priority will still execute
+                    as the order of execution on same <code>priority</code> is undefined).
                     </span>
 
                 </div>

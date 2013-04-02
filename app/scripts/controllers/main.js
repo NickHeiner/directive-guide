@@ -19,7 +19,8 @@ angular.module('directiveGuideApp')
                 }
             },
             link: function postLink(scope, iElement, iAttrs) {
-            }
+            },
+            terminal: false
         };
 
         $scope.activate = function(key) {
