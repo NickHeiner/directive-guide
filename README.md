@@ -3,4 +3,4 @@ directive-guide
 
 package.json.nodejitsu.com for angularjs directives
 
-hell yeah
+hell yeah fuckin right
